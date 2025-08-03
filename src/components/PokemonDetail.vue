@@ -7,11 +7,13 @@ import router from '@/router'
 import { usePokemonStore } from '@/stores/pokemon'
 import { Toast } from 'bootstrap'
 import { getTypeColor } from '@/utils/typeColor'
+import NotFoundView from '@/views/NotFoundView.vue'
 
 // Refs for state
 const route = useRoute()
 const pokemon = ref(null)
 const showModal = ref(false)
+const isLoading = ref(true)
 
 // Toast
 const successToast = ref(null)
@@ -52,6 +54,8 @@ onMounted(async () => {
     pokemon.value = overridden || apiData
   } catch (err) {
     console.error('Failed to fetch Pokemon details', err)
+  } finally {
+    isLoading.value = false
   }
 })
 
@@ -85,8 +89,20 @@ function goBack() {
 </script>
 
 <template>
-  <!-- Container -->
-  <div class="container py-5 animate__animated animate__fadeIn" v-if="pokemon">
+  <!-- Loading Spinner -->
+  <div v-if="isLoading" class="container py-5 text-center animate__animated animate__fadeIn">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Not Found -->
+  <div v-else-if="!pokemon && !isLoading">
+    <NotFoundView />
+  </div>
+
+  <!-- Container foe details -->
+  <div class="container py-5 animate__animated animate__fadeIn" v-else>
     <!-- Back Button -->
     <div class="mb-3 text-center text-md-start">
       <button @click="goBack" class="btn btn-outline-secondary">← Return</button>
@@ -181,13 +197,6 @@ function goBack() {
           <button @click="openEditModal" class="btn btn-primary mt-2 p-2">Edit Detail</button>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Loading Spinner -->
-  <div v-else class="text-center py-5">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 
