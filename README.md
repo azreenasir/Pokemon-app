@@ -10,7 +10,6 @@ A Vue.js single-page app to browse and edit Pokémon info using data from [PokeA
 - Edit Pokémon details with local persistence.
 - Toast notifications on successful/failed updates.
 - Responsive design using Bootstrap.
-- Data persisted via Pinia and localStorage.
 
 ## Tech Stack
 
