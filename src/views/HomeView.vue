@@ -5,12 +5,21 @@ import { usePokemonStore } from '@/stores/pokemon'
 import { storeToRefs } from 'pinia'
 import PokemonCard from '../components/PokemonCard.vue'
 import { debounce } from 'lodash' // for debounce optimize search
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
   components: { PokemonCard },
   setup() {
     const store = usePokemonStore()
-    const query = ref('')
+    const route = useRoute()
+    const router = useRouter()
+
+    const query = ref(route.query.search || '')
+    const page = parseInt(route.query.page) || 1
+
+    // Set initial search and page
+    store.setSearch(query.value)
+    store.setPage(page)
 
     // Destructure reactive properties using storeToRefs
     const { pokemons, isLoading, error, paginatedPokemons, currentPage, totalPages } =
@@ -19,12 +28,22 @@ export default {
     // Debounced function to reduce API/store updates on each keystroke
     const debouncedSearch = debounce((value) => {
       store.setSearch(value)
+      updateRouteParams(value, store.currentPage)
     }, 300)
 
     // Watcher: triggers debounced search when query changes
     watch(query, (val) => {
       debouncedSearch(val)
     })
+
+    // Sync route when page changes
+    watch(currentPage, (val) => {
+      updateRouteParams(query.value, val)
+    })
+
+    const updateRouteParams = (search, page) => {
+      router.replace({ query: { search, page } })
+    }
 
     // Fetch Pokémon data when component is mounted
     onMounted(() => {

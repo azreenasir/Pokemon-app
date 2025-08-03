@@ -21,6 +21,8 @@ let successInstance, errorInstance
 // Pinia store instance
 const store = usePokemonStore()
 
+const edited = ref({ height: 0, weight: 0 })
+
 // Fetch Pokémon details on component moun
 onMounted(async () => {
   try {
@@ -55,12 +57,18 @@ onMounted(async () => {
 
 // Opens the modal
 function openEditModal() {
+  edited.value = {
+    height: pokemon.value.height,
+    weight: pokemon.value.weight,
+  }
   showModal.value = true
 }
 
 // Saves edited height and weight data to the store
 function saveEdit() {
   try {
+    pokemon.value.height = edited.value.height
+    pokemon.value.height = edited.value.weight
     store.saveEditedPokemon(pokemon.value.name, { ...pokemon.value })
     showModal.value = false
     successInstance.show()
@@ -70,11 +78,9 @@ function saveEdit() {
   }
 }
 
-// Navigate back to Home
+// Navigate back to previous page
 function goBack() {
-  store.setSearch('')
-  store.setPage(1)
-  router.push({ name: 'home' }) // route back to Homepage
+  router.push({ name: 'home', query: route.query })
 }
 </script>
 
@@ -83,7 +89,7 @@ function goBack() {
   <div class="container py-5 animate__animated animate__fadeIn" v-if="pokemon">
     <!-- Back Button -->
     <div class="mb-3 text-center text-md-start">
-      <button @click="goBack" class="btn btn-outline-secondary">← Back to Home</button>
+      <button @click="goBack" class="btn btn-outline-secondary">← Return</button>
     </div>
 
     <!-- Pokemon name -->
@@ -201,11 +207,11 @@ function goBack() {
         <div class="modal-body">
           <div class="mb-3">
             <label class="form-label">Height</label>
-            <input v-model="pokemon.height" type="number" class="form-control" />
+            <input v-model="edited.height" type="number" class="form-control" />
           </div>
           <div class="mb-3">
             <label class="form-label">Weight</label>
-            <input v-model="pokemon.weight" type="number" class="form-control" />
+            <input v-model="edited.weight" type="number" class="form-control" />
           </div>
         </div>
         <div class="modal-footer">

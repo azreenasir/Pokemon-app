@@ -1,17 +1,25 @@
 <script setup>
 // Import
-import { useRouter } from 'vue-router' // Router
+import { useRoute, useRouter } from 'vue-router' // Router
 import { getTypeColor } from '@/utils/typeColor' // Type Color to display
 
 // Props
 const props = defineProps({ pokemon: Object })
 
 // Initialize router
+const route = useRoute()
 const router = useRouter()
 
 // function to pokemon details page
 function goToDetail() {
-  router.push({ name: 'PokemonDetail', params: { name: props.pokemon.name } })
+  router.push({
+    name: 'PokemonDetail',
+    params: { name: props.pokemon.name },
+    query: {
+      search: route.query.search,
+      page: route.query.page,
+    },
+  })
 }
 </script>
 
