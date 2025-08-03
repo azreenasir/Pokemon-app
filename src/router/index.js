@@ -21,6 +21,12 @@ const router = createRouter({
       name: 'PokemonDetail',
       component: PokemonDetail,
     },
+    // invalid route 404 page
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/views/NotFoundView.vue'),
+    },
   ],
 })
 
