@@ -206,12 +206,12 @@ function goBack() {
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">Height</label>
-            <input v-model="edited.height" type="number" class="form-control" />
-          </div>
-          <div class="mb-3">
             <label class="form-label">Weight</label>
             <input v-model="edited.weight" type="number" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Height</label>
+            <input v-model="edited.height" type="number" class="form-control" />
           </div>
         </div>
         <div class="modal-footer">
