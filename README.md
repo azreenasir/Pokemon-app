@@ -1,4 +1,6 @@
-# pokemon-challenge
+# pokemon-app
+
+live link: https://pokeworldx.vercel.app/
 
 A Vue.js single-page app to browse and edit Pokémon info using data from [PokeAPI](https://pokeapi.co/). Built with Vue 3, Pinia, and Bootstrap 5.
 
