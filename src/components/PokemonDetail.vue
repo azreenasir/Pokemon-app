@@ -68,7 +68,7 @@ function openEditModal() {
 function saveEdit() {
   try {
     pokemon.value.height = edited.value.height
-    pokemon.value.height = edited.value.weight
+    pokemon.value.weight = edited.value.weight
     store.saveEditedPokemon(pokemon.value.name, { ...pokemon.value })
     showModal.value = false
     successInstance.show()
