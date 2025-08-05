@@ -9,7 +9,7 @@ A Vue.js single-page app to browse and edit Pokémon info using data from [PokeA
 - View a list of Pokémon with images.
 - Search by name.
 - View detailed Pokémon info including stats and types.
-- Edit Pokémon details with local persistence.
+- Edit Pokémon details.
 - Toast notifications on successful/failed updates.
 - Responsive design using Bootstrap.
 
